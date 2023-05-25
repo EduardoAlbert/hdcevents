@@ -17,15 +17,13 @@ class EventController extends Controller
         if ($search) {
 
             $events = Event::where([
-                ['title', 'like', '%'.$search.'%']
+                ['title', 'like', '%' . $search . '%']
             ])->get();
-
         } else {
             $events = Event::all();
         }
 
         return view('welcome', ['events' => $events, 'search' => $search]);
-        
     }
 
     public function create()
@@ -46,7 +44,7 @@ class EventController extends Controller
         $event->items = $request->items;
 
         // Image Upload
-        if($request->hasFile('image') && $request->file('image')->isValid()) {
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
 
             $requestImage = $request->image;
 
@@ -67,7 +65,8 @@ class EventController extends Controller
         return redirect('/')->with('msg', 'Evento criado com sucesso!');
     }
 
-    public function show($id) {
+    public function show($id)
+    {
 
         $event = Event::findOrFail($id);
 
@@ -76,12 +75,20 @@ class EventController extends Controller
         return view('events.show', ['event' => $event, 'eventOwner' => $eventOwner]);
     }
 
-    public function dashboard() {
+    public function dashboard()
+    {
 
         $user = auth()->user();
 
         $events = $user->events;
 
         return view('events.dashboard', ['events' => $events]);
+    }
+
+    public function destroy($id)
+    {
+        Event::findOrFail($id)->delete();
+
+        return redirect('/dashboard')->with('msg', 'Evento excluído com sucesso!');
     }
 }
