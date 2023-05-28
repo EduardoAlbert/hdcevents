@@ -14,7 +14,7 @@
     @if($search)
     <h2>Buscando por: {{ $search }}</h2>
     @else
-    <h2>Próximos Events</h2>
+    <h2>Próximos Eventos</h2>
     <p class="subtitle">Veja os eventos dos próximos dias</p>
     @endif
     <div id="cards-container" class="row">
